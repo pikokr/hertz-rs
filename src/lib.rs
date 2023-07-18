@@ -131,7 +131,7 @@ pub fn fps_to_ns_per_frame(fps: usize) -> u64 {
 /// useful for keeping a constant framerate
 pub fn sleep_for_constant_rate(fps: usize, instant_at_last_frame_start: time::Instant) {
     let ns_per_frame = fps_to_ns_per_frame(fps);
-    let frame_duration = time::Duration::new(ns_per_frame * 1000000000, (ns_per_frame % 1000000000) as u32);
+    let frame_duration = time::Duration::new(ns_per_frame / 1000000000, (ns_per_frame % 1000000000) as u32);
     let elapsed = instant_at_last_frame_start.elapsed();
     if elapsed < frame_duration {
         std::thread::sleep(frame_duration - elapsed);
